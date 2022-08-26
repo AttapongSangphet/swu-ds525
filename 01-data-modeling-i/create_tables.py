@@ -1,7 +1,7 @@
 import psycopg2
 
 
-table_drop = "DROP TABLE IF EXISTS Event, Actor, Repo, Org"
+table_drop = "DROP TABLE IF EXISTS events, actors, repos, orgs, payloads"
 
 table_create = """ 
     CREATE TABLE IF NOT EXISTS actors (
@@ -39,7 +39,24 @@ table_create = """
         CONSTRAINT fk_actor FOREIGN KEY(actor_id) REFERENCES actors(id),
         CONSTRAINT fk_repo FOREIGN KEY(repo_id) REFERENCES repos(id)
     );
-        CREATE TABLE IF NOT EXISTS payload (
+        CREATE TABLE IF NOT EXISTS payloads (
+            issue_id int,
+            action text,
+            issue text,
+            comment text,
+            push_id int,
+            size int,
+            distinct_size text,
+            ref text,
+            head text,
+            before text,
+            commits text,
+            ref_type text,
+            master_branch text,
+            description text,
+            pusher_type text,
+            release_id int,
+            release text
     );
 """
 
