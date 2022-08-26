@@ -50,7 +50,6 @@ def process(cur, conn, filepath):
                 cur.execute(insert_statement)
 
 
-
                 # Insert data into tables here
                 insert_statement = f"""
                     INSERT INTO repos (
