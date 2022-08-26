@@ -21,12 +21,12 @@ To shutdown, press Ctrl+C and run:
 docker-compose down
 ```
 
-## Running Create_table Script
+## Running Create table Script
 ```sh
 python create_table.py
 ```
 
-## Running etl Script
+## Running ETL Script
 ```sh
 python etl.py
 ```
