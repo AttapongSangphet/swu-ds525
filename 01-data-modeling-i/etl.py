@@ -51,6 +51,21 @@ def process(cur, conn, filepath):
 
 
                 # Insert data into tables here
+                #insert_statement = f"""
+                #    INSERT INTO orgs (
+                #        id,
+                #        login,
+                #        gravatar_id,
+                #        url,
+                #        avatar_url
+                #    ) VALUES ({each["org"]["id"]}, '{each["org"]["login"]}', '{each["org"]["gravatar_id"]}', '{each["org"]["url"]}', '{each["org"]["avatar_url"]}')
+                #    ON CONFLICT (id) DO NOTHING
+                #"""
+                # print(insert_statement)
+                #cur.execute(insert_statement)###
+
+
+                # Insert data into tables here
                 insert_statement = f"""
                     INSERT INTO repos (
                         id,
