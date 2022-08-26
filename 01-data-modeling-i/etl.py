@@ -36,7 +36,7 @@ def process(cur, conn, filepath):
 
                 # Insert data into tables here
                 insert_statement = f"""
-                    INSERT INTO actor (
+                    INSERT INTO actors (
                         id,
                         login,
                         display_login,
@@ -49,9 +49,11 @@ def process(cur, conn, filepath):
                 # print(insert_statement)
                 cur.execute(insert_statement)
 
+
+
                 # Insert data into tables here
                 insert_statement = f"""
-                    INSERT INTO repo (
+                    INSERT INTO repos (
                         id,
                         name,
                         url
@@ -63,12 +65,13 @@ def process(cur, conn, filepath):
 
                 # Insert data into tables here
                 insert_statement = f"""
-                    INSERT INTO event (
+                    INSERT INTO events (
                         id,
                         type,
                         public,
-                        a_id
-                    ) VALUES ('{each["id"]}', '{each["type"]}', '{each["public"]}', '{each["actor"]["id"]}')
+                        actor_id,
+                        repo_id
+                    ) VALUES ('{each["id"]}', '{each["type"]}', '{each["public"]}', '{each["actor"]["id"]}', '{each["repo"]["id"]}')
                     ON CONFLICT (id) DO NOTHING
                 """
                 # print(insert_statement)

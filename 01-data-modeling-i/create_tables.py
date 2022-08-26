@@ -4,7 +4,7 @@ import psycopg2
 table_drop = "DROP TABLE IF EXISTS Event, Actor, Repo, Org"
 
 table_create = """ 
-    CREATE TABLE IF NOT EXISTS Actor (
+    CREATE TABLE IF NOT EXISTS actors (
         id int,
         login text,
         display_login text,
@@ -13,7 +13,7 @@ table_create = """
         avatar_url text,
         PRIMARY KEY (id)
     );
-    CREATE TABLE IF NOT EXISTS Org (
+    CREATE TABLE IF NOT EXISTS orgs (
         id int,
         login text,
         gravatar_id text,
@@ -21,21 +21,25 @@ table_create = """
         avatar_url text,
         PRIMARY KEY (id)
     );
-    CREATE TABLE IF NOT EXISTS Repo (
+    CREATE TABLE IF NOT EXISTS repos (
         id int,
         name text,
         url text,
         PRIMARY KEY (id)
     );
-    CREATE TABLE IF NOT EXISTS Event (
+    CREATE TABLE IF NOT EXISTS events (
         id text,
-        R_id int,
-        O_id int,
-        A_id int,
+        repo_id int,
+        org_id int,
+        actor_id int,
         type text,
         public text,
         create_at text,
-        PRIMARY KEY (id)
+        PRIMARY KEY (id),
+        CONSTRAINT fk_actor FOREIGN KEY(actor_id) REFERENCES actors(id),
+        CONSTRAINT fk_repo FOREIGN KEY(repo_id) REFERENCES repos(id)
+    );
+        CREATE TABLE IF NOT EXISTS payload (
     );
 """
 
