@@ -3,7 +3,6 @@
 ## Getting Started
 
 ```sh
-cd 01-data-modeling-i
 python -m venv ENV
 source ENV/bin/activate
 pip install -r requirements.txt
