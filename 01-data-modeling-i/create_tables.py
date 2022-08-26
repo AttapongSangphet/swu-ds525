@@ -4,7 +4,7 @@ import psycopg2
 table_drop = "DROP TABLE IF EXISTS Event, Actor, Repo, Org"
 
 table_create = """ 
-    CREATE TABLE IF NOT EXISTS actor (
+    CREATE TABLE IF NOT EXISTS actors (
         id int,
         login text,
         display_login text,
