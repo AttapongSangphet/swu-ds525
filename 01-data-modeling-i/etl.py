@@ -64,7 +64,7 @@ def process(cur, conn, filepath):
                 """
                     # print(insert_statement)
                     cur.execute(insert_statement)###
-                except:
+                except KeyError:
                     pass
 
 
@@ -81,18 +81,23 @@ def process(cur, conn, filepath):
                 cur.execute(insert_statement)
 
                 # Insert data into tables here
-                insert_statement = f"""
-                    INSERT INTO events (
-                        id,
-                        type,
-                        public,
-                        actor_id,
-                        repo_id
-                    ) VALUES ('{each["id"]}', '{each["type"]}', '{each["public"]}', '{each["actor"]["id"]}', '{each["repo"]["id"]}')
-                    ON CONFLICT (id) DO NOTHING
-                """
-                # print(insert_statement)
-                cur.execute(insert_statement)
+                try:
+                    insert_statement = f"""
+                        INSERT INTO events (
+                            id,
+                            type,
+                            public,
+                            created_at,
+                            actor_id,
+                            repo_id,
+                            org_id
+                        ) VALUES ('{each["id"]}', '{each["type"]}', '{each["public"]}', '{each["created_at"]}', '{each["actor"]["id"]}', '{each["repo"]["id"]}', '{each["org"]["id"]}')
+                        ON CONFLICT (id) DO NOTHING
+                    """
+                    # print(insert_statement)
+                    cur.execute(insert_statement)
+                except KeyError:
+                    pass
 
                 conn.commit()
 
