@@ -34,7 +34,7 @@ def process(cur, conn, filepath):
                 # Print some sample data
                 print(each["id"], each["type"], each["actor"]["login"])
 
-                # Insert data into tables here
+                # Insert data into actors table
                 insert_statement = f"""
                     INSERT INTO actors (
                         id,
@@ -50,7 +50,7 @@ def process(cur, conn, filepath):
                 cur.execute(insert_statement)
 
 
-                # Insert data into tables here
+                # Insert data into orgs table
                 try:
                     insert_statement = f"""
                         INSERT INTO orgs (
@@ -68,7 +68,7 @@ def process(cur, conn, filepath):
                     pass
 
 
-                # Insert data into tables here
+                # Insert data into repos table
                 insert_statement = f"""
                     INSERT INTO repos (
                         id,
@@ -80,7 +80,8 @@ def process(cur, conn, filepath):
                 # print(insert_statement)
                 cur.execute(insert_statement)
 
-                # Insert data into tables here
+                # Insert data into  events table
+
                 try:
                     insert_statement = f"""
                         INSERT INTO events (
@@ -96,8 +97,21 @@ def process(cur, conn, filepath):
                     """
                     # print(insert_statement)
                     cur.execute(insert_statement)
-                except KeyError:
-                    pass
+                except:
+                    insert_statement = f"""
+                        INSERT INTO events (
+                            id,
+                            type,
+                            public,
+                            created_at,
+                            actor_id,
+                            repo_id
+                        ) VALUES ('{each["id"]}', '{each["type"]}', '{each["public"]}', '{each["created_at"]}', '{each["actor"]["id"]}', '{each["repo"]["id"]}')
+                        ON CONFLICT (id) DO NOTHING
+                    """
+                    # print(insert_statement)
+                    cur.execute(insert_statement)
+
 
                 conn.commit()
 
