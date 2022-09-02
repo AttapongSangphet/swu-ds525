@@ -11,14 +11,14 @@ table_drop = "DROP TABLE events"
 table_create = """
     CREATE TABLE IF NOT EXISTS events
     (
-        id text,
+        event_id text,
         created_at text,
         type text,
         actor_id text,
-        public boolean,
+        action text,
         PRIMARY KEY (
-            created_at,
-            type
+            type,
+            created_at
         )
     )
 """
@@ -76,10 +76,13 @@ def process(session, filepath):
 
                 # Insert data into tables here
                 query = f"""
-                INSERT INTO events (id, type, created_at, actor_id) VALUES ('{each["id"]}', '{each["type"]}', '{each["created_at"]}', '{each["actor"]["id"]}')
+                INSERT INTO events (event_id, type, created_at, actor_id) VALUES ('{each["id"]}', '{each["type"]}', '{each["created_at"]}', '{each["actor"]["id"]}')
                 """
                 session.execute(query)
 
+
+event_types = ['IssuesEvent','PullRequestReviewCommentEvent','CreateEvent','PullRequestEvent','PushEvent','PublicEvent'
+            ,'WatchEvent','DeleteEvent','PullRequestReviewEvent','ReleaseEvent', 'IssueCommentEvent']
 
 def main():
     cluster = Cluster(['127.0.0.1'])
@@ -106,11 +109,9 @@ def main():
     create_tables(session)
 
     process(session, filepath="../data")
- 
-
     # Select data in Cassandra and print them to stdout
     query = """
-    SELECT * from events WHERE created_at <= '2022-08-17T16:00:00Z' and type = 'WatchEvent'  ALLOW FILTERING
+    SELECT count(event_id), type from events GROUP BY type ALLOW FILTERING
     """
     try:
         rows = session.execute(query)
@@ -119,6 +120,20 @@ def main():
 
     for row in rows:
         print(row)
+
+    for event_type in event_types:
+        # Select data in Cassandra and print them to stdout
+        query = """
+        SELECT * from events WHERE created_at <= '2022-08-17T16:00:00Z' and type = '"""+event_type+"""' ALLOW FILTERING;
+        """
+        try:
+            rows = session.execute(query)
+        except Exception as e:
+            print(e)
+
+        for row in rows:
+            print(row)
+
 
 
 if __name__ == "__main__":
