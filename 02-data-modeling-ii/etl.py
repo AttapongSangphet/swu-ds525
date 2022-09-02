@@ -1,8 +1,10 @@
-from cassandra.cluster import Cluster
 import glob
 import json
 import os
 from typing import List
+
+from cassandra.cluster import Cluster
+
 
 table_drop = "DROP TABLE events"
 
@@ -10,8 +12,10 @@ table_create = """
     CREATE TABLE IF NOT EXISTS events
     (
         id text,
-        type text,
         created_at text,
+        type text,
+        actor_id text,
+        public boolean,
         PRIMARY KEY (
             created_at,
             type
@@ -41,6 +45,7 @@ def create_tables(session):
         except Exception as e:
             print(e)
 
+
 def get_files(filepath: str) -> List[str]:
     """
     Description: This function is responsible for listing the files in a directory
@@ -57,6 +62,7 @@ def get_files(filepath: str) -> List[str]:
 
     return all_files
 
+
 def process(session, filepath):
     # Get list of files from filepath
     all_files = get_files(filepath)
@@ -66,20 +72,13 @@ def process(session, filepath):
             data = json.loads(f.read())
             for each in data:
                 # Print some sample data
-                print(each["id"], each["type"], each["created_at"])
+                #print(each["id"], each["type"], each["actor"]["login"])
 
                 # Insert data into tables here
                 query = f"""
-                INSERT INTO events (id, type, created_at) VALUES ('{each["id"]}', '{each["type"]}', '{each["created_at"]}')
+                INSERT INTO events (id, type, created_at, actor_id) VALUES ('{each["id"]}', '{each["type"]}', '{each["created_at"]}', '{each["actor"]["id"]}')
                 """
                 session.execute(query)
-
-
-def insert_sample_data(session):
-    query = f"""
-    INSERT INTO events (id, type, created_at) VALUES ('23487929637', 'PullRequestReviewEvent', '2022-08-17T15:53:42Z')
-    """
-    session.execute(query)
 
 
 def main():
@@ -107,14 +106,11 @@ def main():
     create_tables(session)
 
     process(session, filepath="../data")
-    #insert_sample_data(session)
+ 
 
     # Select data in Cassandra and print them to stdout
-    #query = """
-    #SELECT * from events WHERE id = '23487929637' AND type = 'IssueCommentEvent'
-    #"""
     query = """
-    SELECT * from events WHERE created_at = '2022-08-17T15:53:42Z' and type = 'PullRequestReviewEvent'
+    SELECT * from events WHERE created_at <= '2022-08-17T16:00:00Z' and type = 'WatchEvent'  ALLOW FILTERING
     """
     try:
         rows = session.execute(query)
