@@ -14,13 +14,13 @@ pip install -r requirements.txt
 docker-compose up
 ```
 
-To shutdown, press Ctrl+C and run:
-
-```sh
-docker-compose down
-```
-
 ## Running ETL Script
 ```sh
 python etl.py
+```
+
+## To shutdown, press Ctrl+C and run:
+
+```sh
+docker-compose down
 ```
