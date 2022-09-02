@@ -75,10 +75,16 @@ def process(session, filepath):
                 #print(each["id"], each["type"], each["actor"]["login"])
 
                 # Insert data into tables here
-                query = f"""
-                INSERT INTO events (event_id, type, created_at, actor_id) VALUES ('{each["id"]}', '{each["type"]}', '{each["created_at"]}', '{each["actor"]["id"]}')
-                """
-                session.execute(query)
+                try:
+                    query = f"""
+                    INSERT INTO events (event_id, type, created_at, actor_id, action) VALUES ('{each["id"]}', '{each["type"]}', '{each["created_at"]}', '{each["actor"]["id"]}', '{each["payload"]["action"]}')
+                    """
+                    session.execute(query)
+                except:
+                    query = f"""
+                    INSERT INTO events (event_id, type, created_at, actor_id, action) VALUES ('{each["id"]}', '{each["type"]}', '{each["created_at"]}', '{each["actor"]["id"]}', '-')
+                    """
+                    session.execute(query)
 
 
 event_types = ['IssuesEvent','PullRequestReviewCommentEvent','CreateEvent','PullRequestEvent','PushEvent','PublicEvent'
