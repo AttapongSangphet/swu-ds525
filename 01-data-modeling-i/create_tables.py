@@ -36,7 +36,7 @@ table_create = """
         org_id int,
         actor_id int,
         type text,
-        public text,
+        public boolean,
         created_at text,
         payload_issue_id int,
         payload_action text,
