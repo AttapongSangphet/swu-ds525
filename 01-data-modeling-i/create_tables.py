@@ -1,7 +1,10 @@
 import psycopg2
 
 
-table_drop = "DROP TABLE IF EXISTS events, actors, repos, orgs, payloads"
+table_drop_events = "DROP TABLE IF EXISTS events"
+table_drop_actors = "DROP TABLE IF EXISTS actors"
+table_drop_repos = "DROP TABLE IF EXISTS repos"
+table_drop_orgs = "DROP TABLE IF EXISTS orgs"
 
 table_create = """ 
     CREATE TABLE IF NOT EXISTS actors (
@@ -63,7 +66,7 @@ create_table_queries = [
     table_create,
 ]
 drop_table_queries = [
-    table_drop,
+    table_drop_events, table_drop_actors, table_drop_repos, table_drop_orgs
 ]
 
 
