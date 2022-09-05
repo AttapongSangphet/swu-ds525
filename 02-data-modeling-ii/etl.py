@@ -116,10 +116,10 @@ def main():
 
     process(session, filepath="../data")
 
-    print("Number of \'WatchEvent\' events")
+    print("Query for \'WatchEvent\' events")
     # Select data in Cassandra and print them to stdout
     query = """
-    SELECT count(*), type from events WHERE type = 'WatchEvent' GROUP BY type ALLOW FILTERING
+    SELECT type, created_at, event_id, actor_id, action from events WHERE type = 'WatchEvent' ALLOW FILTERING
     """
     try:
         rows = session.execute(query)
@@ -129,7 +129,7 @@ def main():
     for row in rows:
         print(row)
 
-    print("Number of all events by type, created_at: >= '2022-08-17T15:54:00Z'")
+    print("Number of each event by type, created_at: >= '2022-08-17T15:54:00Z'")
     for event_type in event_types:
         # Select data in Cassandra and print them to stdout
         query = """
