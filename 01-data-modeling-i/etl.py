@@ -28,7 +28,7 @@ def process(cur, conn, filepath):
     all_files = get_files(filepath)
 
     for datafile in all_files:
-        with open(datafile, "r") as f:
+        with open(datafile, "r", encoding="utf-8") as f:
             data = json.loads(f.read())
             for each in data:
                 # Print some sample data
