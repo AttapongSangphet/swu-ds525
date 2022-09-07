@@ -29,5 +29,3 @@ python etl.py
 ```sh
 docker-compose down
 ```
-
-## 123
