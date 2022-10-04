@@ -24,3 +24,6 @@ python etl.py
 ```sh
 docker-compose down
 ```
+
+## Example query from cassandra keyspace
+![er](./data-modeling-ii_example-query.JPG)
