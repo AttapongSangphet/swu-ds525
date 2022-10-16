@@ -24,6 +24,10 @@ source ENV/bin/activate
 pip install -r requirements.txt
 ```
 
+### Change paths of AWS S3, AWS Redshift and IAM roles to the correct paths that we need to connect before running ETL Script.
+![Redshift Connection path](pictures/pic10.jpg)
+![S3 Connection path](pictures/pic11.jpg)
+
 ### Running ETL Script
 ```sh
 python etl.py
