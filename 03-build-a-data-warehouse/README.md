@@ -4,8 +4,9 @@
 ## Getting Started
 
 ### Create AWS Redshift 
+
 ## AWS Redshift
-![AWS Redshift](pictures/AWS Redshift.jpg)
+![AWS Redshift](./pictures/AWS Redshift.jpg)
 
 ```sh
 python -m venv ENV
