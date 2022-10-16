@@ -4,25 +4,27 @@
 ### AWS Redshift
 ![AWS S3](pictures/pic04.jpg)
 
-## AWS Redshift
-![AWS Redshift](pictures/pic01.jpg)
-
-
-## Then, We create AWS Redshift, an AWS data warehouse, for loading data from S3 into it 
+## Then, We create AWS Redshift, an AWS data warehouse, for loading data from S3 into it.
 
 ### Create AWS Redshift
 ![AWS Redshift](pictures/pic01.jpg)
 
+### enable publicly asccessible of AWS Redshift
+![Modify publicly accessible setting](pictures/pic03.jpg)
 
-## Now we can use etl scripts for running query command whatever we want
-## Getting Started
+### Configure inbound rules of IAM to make sure that we are allowed to access to AWS Redshift, specific soreces an types is recommended.
+![IAM-Inbound rules](pictures/pic07.jpg)
+
+## Now we can access to AWS Redshift by running provided etl scripts of query commands.
+
+### Getting Started
 ```sh
 python -m venv ENV
 source ENV/bin/activate
 pip install -r requirements.txt
 ```
 
-## Running ETL Script
+### Running ETL Script
 ```sh
 python etl.py
 ```
