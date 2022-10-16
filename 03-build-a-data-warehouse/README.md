@@ -15,6 +15,12 @@
 ### Configure inbound rules of IAM to make sure that we are allowed to access to AWS Redshift, specific soreces an types is recommended.
 ![IAM-Inbound rules](pictures/pic07.jpg)
 
+### Change paths of AWS S3, AWS Redshift and IAM roles to the correct paths that we need to connect before running ETL Script.
+### S3 Connection path
+![S3 Connection path](pictures/pic10.jpg)
+### Redshift Connection path
+![Redshift Connection path](pictures/pic11.jpg)
+
 ## Now we can access to AWS Redshift by running provided etl scripts of query commands.
 
 ### Getting Started
@@ -23,12 +29,6 @@ python -m venv ENV
 source ENV/bin/activate
 pip install -r requirements.txt
 ```
-
-### Change paths of AWS S3, AWS Redshift and IAM roles to the correct paths that we need to connect before running ETL Script.
-### S3 Connection path
-![S3 Connection path](pictures/pic10.jpg)
-### Redshift Connection path
-![Redshift Connection path](pictures/pic11.jpg)
 
 ### Running ETL Script
 ```sh
