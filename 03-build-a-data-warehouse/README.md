@@ -1,7 +1,7 @@
 # Data Modeling II - Building a Data Warehouse
 
 ## First, We create AWS S3 as our datalake that we can store our JSON files, Events data and JSON Path.
-### AWS Redshift
+### Create AWS S3
 ![AWS S3](pictures/pic04.jpg)
 
 ## Then, We create AWS Redshift, an AWS data warehouse, for loading data from S3 into it.
@@ -25,8 +25,10 @@ pip install -r requirements.txt
 ```
 
 ### Change paths of AWS S3, AWS Redshift and IAM roles to the correct paths that we need to connect before running ETL Script.
-![Redshift Connection path](pictures/pic10.jpg)
-![S3 Connection path](pictures/pic11.jpg)
+### S3 Connection path
+![S3 Connection path](pictures/pic10.jpg)
+### Redshift Connection path
+![Redshift Connection path](pictures/pic11.jpg)
 
 ### Running ETL Script
 ```sh
@@ -34,7 +36,9 @@ python etl.py
 ```
 
 ### Some examples of data query are shown in pictures below
+### Events table
 ![Events table](pictures/pic08.jpg)
+### Events table (by Query Editor in AWS Redshift)
 ![Events table (by Query Editor in AWS Redshift)](pictures/pic09.jpg)
 
 
