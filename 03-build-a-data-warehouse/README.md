@@ -1,13 +1,11 @@
 # Data Modeling II - Building a Data Warehouse
 
-
-## Getting Started
-
 ### Create AWS Redshift 
 
 ## AWS Redshift
-![AWS Redshift](./pictures/AWS Redshift.jpg)
+![AWS Redshift](./pictures/AWS Redshift.JPG)
 
+## Getting Started
 ```sh
 python -m venv ENV
 source ENV/bin/activate
