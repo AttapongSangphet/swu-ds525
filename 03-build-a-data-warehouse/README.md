@@ -29,6 +29,10 @@ pip install -r requirements.txt
 python etl.py
 ```
 
+### Some examples of data query are shown in pictures below
+![Events table](pictures/pic08.jpg)
+![Events table (by Query Editor in AWS Redshift)](pictures/pic09.jpg)
+
 
 
 
