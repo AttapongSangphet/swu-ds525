@@ -3,7 +3,7 @@
 ### Create AWS Redshift 
 
 ## AWS Redshift
-![AWS Redshift](./pictures/AWS Redshift.JPG)
+![AWS Redshift](pictures/pic01.jpg)
 
 ## Getting Started
 ```sh
