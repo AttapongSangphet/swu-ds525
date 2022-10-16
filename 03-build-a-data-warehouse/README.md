@@ -1,1 +1,23 @@
-# Building a Data Warehouse
+# Data Modeling II - Building a Data Warehouse
+
+
+## Getting Started
+
+### Create AWS Redshift 
+## AWS Redshift
+![AWS Redshift](pictures/AWS Redshift.jpg)
+
+```sh
+python -m venv ENV
+source ENV/bin/activate
+pip install -r requirements.txt
+```
+
+## Running ETL Script
+```sh
+python etl.py
+```
+
+
+
+
