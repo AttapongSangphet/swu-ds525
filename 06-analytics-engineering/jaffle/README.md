@@ -1,6 +1,16 @@
 # Analytics Engineering
 
-`~/.dbt/profiles.yml`
+Create a dbt project
+
+```sh
+dbt init
+```
+
+Edit the dbt profiles
+
+```sh
+code ~/.dbt/profiles.yml
+```
 
 ```yml
 jaffle:
@@ -27,4 +37,32 @@ jaffle:
       schema: prod
 
   target: dev
+```
+
+Test dbt connection
+
+```sh
+cd jaffle
+dbt debug
+```
+
+You should see "All checks passed!".
+
+To create models
+
+```sh
+dbt run
+```
+
+To test models
+
+```sh
+dbt test
+```
+
+To view docs (on Gitpod)
+
+```sh
+dbt docs generate
+dbt docs serve --no-browser
 ```
