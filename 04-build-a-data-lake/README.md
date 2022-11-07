@@ -8,7 +8,7 @@
 cd 04-build-a-data-lake/
 ```
 
-### running pyspark-notebook (On Gitpod)
+### running docker-compose of pyspark-notebook service (On Gitpod)
 
 ```sh
 docker-compose up
