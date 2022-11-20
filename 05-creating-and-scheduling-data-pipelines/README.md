@@ -3,7 +3,7 @@
 ## Data modeling
 The data model for this project is same as project 01, but this time we try to build it by using data pipetime, Airflow.
 
-![Data Model](pictures/Data_Modeling_i.PNG)
+![Data Model](pictures/Data_Modeling_i.png)
 
 ## Before we start running docker compose, we can write etl scripts (.py files) and save them into dags folder
 
