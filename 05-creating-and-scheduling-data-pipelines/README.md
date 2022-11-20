@@ -3,7 +3,7 @@
 ## Data modeling
 The data model for this project is same as project 01, but this time we try to build it by using data pipetime, Airflow.
 
-![01](Data_Modeling_i.jpg)
+![Data Model](Data_Modeling_i.jpg)
 
 ## Before we start running docker compose, we can write etl scripts (.py files) and save them into dags folder
 
@@ -27,10 +27,10 @@ and all statuses of each process are turned to "success" (green color).
 
 ![Operator Process](ETL_Graph.jpg)
 
-![03](atrflow_UI.jpg)
+![Airflow UI](airflow_UI.jpg)
 
 
 ## now we can connect to SQLPad UI by following port 3000 to see our created tables
 
-![04](SQLPad_UI.jpg)
+![SQLPad UI](SQLPad_UI.jpg)
 
