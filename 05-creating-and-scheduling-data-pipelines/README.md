@@ -1,20 +1,36 @@
 # Creating and Scheduling Data Pipelines
 
-ถ้าใช้งานระบบที่เป็น Linux ให้เรารันคำสั่งด้านล่างนี้ก่อน
+## Data modeling
+The data model for this project is same as project 01, but this time we try to build it by using data pipetime, Airflow.
+
+![01](Data_Modeling_i.jpg)
+
+## Before we start running docker compose, we can write etl scripts (.py files) and save them into dags folder
+
+
+## getting start
 
 ```sh
 mkdir -p ./dags ./logs ./plugins
 echo -e "AIRFLOW_UID=$(id -u)" > .env
 ```
 
-หลังจากนั้นให้รัน
+## Running docker compose
 
 ```sh
 docker-compose up
 ```
 
-เราจะสามารถเข้าไปที่หน้า Airflow UI ได้ที่ port 8080
+## Connect to Atrflow UI by following port 8080
+Then we can activate etl dags and now we can see that a graph of operator process was created autonomously 
+and all statuses of each process are turned to "success" (green color).
 
-เสร็จแล้วให้คัดลอกโฟลเดอร์ `data` ที่เตรียมไว้ข้างนอกสุด เข้ามาใส่ในโฟลเดอร์ `dags` เพื่อที่ Airflow จะได้เห็นไฟล์ข้อมูลเหล่านี้ แล้วจึงค่อยทำโปรเจคต่อ
+![Operator Process](ETL_Graph.jpg)
 
-**หมายเหตุ:** จริง ๆ แล้วเราสามารถเอาโฟลเดอร์ `data` ไว้ที่ไหนก็ได้ที่ Airflow ที่เรารันเข้าถึงได้ แต่เพื่อความง่ายสำหรับโปรเจคนี้ เราจะนำเอาโฟลเดอร์ `data` ไว้ในโฟลเดอร์ `dags` เลย
+![03](atrflow_UI.jpg)
+
+
+## now we can connect to SQLPad UI by following port 3000 to see our created tables
+
+![04](SQLPad_UI.jpg)
+
