@@ -31,7 +31,7 @@ def _create_tables():
     conn = hook.get_conn()
     cur = conn.cursor()
 
-    table_create = """ 
+    table_create_actors = """ 
         CREATE TABLE IF NOT EXISTS actors (
             id int,
             login text,
@@ -40,7 +40,9 @@ def _create_tables():
             url text,
             avatar_url text,
             PRIMARY KEY (id)
-        );
+        )
+    """
+    table_create_orgs = """ 
         CREATE TABLE IF NOT EXISTS orgs (
             id int,
             login text,
@@ -48,13 +50,17 @@ def _create_tables():
             url text,
             avatar_url text,
             PRIMARY KEY (id)
-        );
+        )
+    """
+    table_create_repos = """ 
         CREATE TABLE IF NOT EXISTS repos (
             id int,
             name text,
             url text,
             PRIMARY KEY (id)
-        );
+        )
+    """
+    table_create_events = """ 
         CREATE TABLE IF NOT EXISTS events (
             id text,
             repo_id int,
@@ -84,11 +90,14 @@ def _create_tables():
             CONSTRAINT fk_actor FOREIGN KEY(actor_id) REFERENCES actors(id),
             CONSTRAINT fk_repo FOREIGN KEY(repo_id) REFERENCES repos(id),
             CONSTRAINT fk_org FOREIGN KEY(org_id) REFERENCES orgs(id)
-        );
+        )
     """
 
     create_table_queries = [
-        table_create,
+        table_create_actors,
+        table_create_repos,
+        table_create_orgs,
+        table_create_events,
     ]
 
     for query in create_table_queries:
