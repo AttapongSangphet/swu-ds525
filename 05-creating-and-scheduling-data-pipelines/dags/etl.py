@@ -31,6 +31,11 @@ def _create_tables():
     conn = hook.get_conn()
     cur = conn.cursor()
 
+    table_drop_events = "DROP TABLE IF EXISTS events"
+    table_drop_actors = "DROP TABLE IF EXISTS actors"
+    table_drop_repos = "DROP TABLE IF EXISTS repos"
+    table_drop_orgs = "DROP TABLE IF EXISTS orgs"
+
     table_create_actors = """ 
         CREATE TABLE IF NOT EXISTS actors (
             id int,
@@ -94,6 +99,10 @@ def _create_tables():
     """
 
     create_table_queries = [
+        table_drop_events,
+        table_drop_actors,
+        table_drop_repos,
+        table_drop_orgs,
         table_create_actors,
         table_create_repos,
         table_create_orgs,
