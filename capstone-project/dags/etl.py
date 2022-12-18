@@ -66,9 +66,10 @@ def _copy_tables():
         IGNOREHEADER 1
     """
 
-    for query in copy_table_query:
-        cur.execute(query.format(curr_date, aws_access_key_id, aws_secret_access_key, aws_session_token))        
-        conn.commit()
+    cur.execute(copy_table_query)
+    conn.commit()
+
+    conn.close()
 
 with DAG(
     "etl",
