@@ -44,7 +44,7 @@ def _create_tables():
 
     table_create_countbytype = """ 
         CREATE TABLE IF NOT EXISTS countbytype (
-            cnt_by_type text
+            cnt_by_type int
             , Property_Type text
         )
         """
