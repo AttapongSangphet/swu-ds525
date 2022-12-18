@@ -28,7 +28,8 @@ def _get_files(filepath: str) -> List[str]:
 
 def _create_tables():
     hook = PostgresHook(postgres_conn_id="my_postgres")
-    conn = hook.get_conn()
+    
+     = hook.get_conn()
     cur = conn.cursor()
 
     table_drop_events = "DROP TABLE IF EXISTS events"
