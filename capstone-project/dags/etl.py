@@ -22,6 +22,9 @@ cur = conn.cursor()
 def _create_tables():
 
     table_drop_housingprice = "DROP TABLE IF EXISTS housingprice"
+    table_drop_countbytype = "DROP TABLE IF EXISTS countbytype"
+    table_drop_avgpricebyloc = "DROP TABLE IF EXISTS avgpricebyloc"
+    table_drop_detachedhouse_price = "DROP TABLE IF EXISTS detachedhouse_price"
 
     table_create_housingprice = """ 
         CREATE TABLE IF NOT EXISTS housingprice (
@@ -41,22 +44,19 @@ def _create_tables():
 
     table_create_countbytype = """ 
         CREATE TABLE IF NOT EXISTS countbytype (
-            Transaction_id text
+            cnt_by_type text
             , Property_Type text
-        )
-        """
-
-    table_create_detachedhouse_price = """ 
-        CREATE TABLE IF NOT EXISTS avgpricebyloc (
-            Transaction_id text
-            , Property_Type text
-            , Price int
-            , District text
-            , Town_or_City text
         )
         """
 
     table_create_avgpricebyloc = """ 
+        CREATE TABLE IF NOT EXISTS avgpricebyloc (
+            AVG_Price int
+            , District text
+        )
+        """
+
+    table_create_detachedhouse_price = """ 
         CREATE TABLE IF NOT EXISTS detachedhouse_price (
             Transaction_id text
             , Property_Type text
@@ -66,6 +66,9 @@ def _create_tables():
 
     create_table_queries = [
         table_drop_housingprice,
+        table_drop_countbytype,
+        table_drop_avgpricebyloc,
+        table_drop_detachedhouse_price,
         table_create_housingprice,
         table_create_countbytype,
         table_create_detachedhouse_price,
@@ -95,19 +98,19 @@ def _copy_tables():
 def _insert_tables():
     insert_dwh_countbytype ="""
         INSERT INTO countbytype 
-        SELECT Transaction_id
-            , Property_Type
+        SELECT COUNT(Transaction_id)
+	        , property_type
         FROM housingprice
+        GROUP BY Property_Type
         """
 
     insert_dwh_avgpricebyloc ="""
         INSERT INTO avgpricebyloc 
-        SELECT Transaction_id
-            , Property_Type
-            , Price
-            , District
-            , Town_or_City
+        SELECT AVG(Price)
+	        , District
         FROM housingprice
+        WHERE property_type = 'D'
+        GROUP BY  District
         """
 
     insert_dwh_detachedhouse_price ="""
