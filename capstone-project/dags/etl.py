@@ -2,14 +2,12 @@ import psycopg2
 import json
 import glob
 import os
-from datetime import datetime
 from typing import List
 from airflow import DAG
 from airflow.utils import timezone
 from airflow.operators.python import PythonOperator
 from airflow.providers.postgres.hooks.postgres import PostgresHook
 
-curr_date = datetime.today().strftime('%Y-%m-%d')
 
 host = "redshift-cluster-1.ch9yux0jr29i.us-east-1.redshift.amazonaws.com"
 dbname = "dev"
@@ -20,9 +18,6 @@ conn_str = f"host={host} dbname={dbname} user={user} password={password} port={p
 conn = psycopg2.connect(conn_str)
 cur = conn.cursor()
 
-aws_access_key_id = 'ASIA255IGVKUIS5PWJ5G'
-aws_secret_access_key = 'r2EKh8d4HBu89pvssxkYqpVeg+cbHImtf/blBlaj'
-aws_session_token = 'FwoGZXIvYXdzECAaDFM3rp2XL67jIWcFTiLOAQnRq9rT9HWwTuT2iBD7X3oY/33V1yHfbVgac1r0hQlDA/+d5G8E5C5PZrM4tV/1nDk607gLOER02q5kTXldvxB3Bp2QpqY8wGTNzgzL5CZdobKNLWb48Nnz6yh6dGEI1VYdjX9e8fUS/QiwDhlH0JcDD2lYVAbeOsEMvgw+zokKLdwUWTt838ybbE3CGhKtjMj/Zt1WXVs0Xfa9EHfMgf1OwG1jntL1xHd7mQtghrxIiVgYFfmdHykm4VLA1qdc1bwmvBdIWxYklS+pTQCEKObL/JwGMi23KSH6KeLIeY2notXsZMjOJ3jhZQp7/9bEZItOYEDRJDYnYBKGHT8Mpovbi/8='
 
 def _create_tables():
 
@@ -44,10 +39,37 @@ def _create_tables():
         )
         """
 
+    table_create_countbytype = """ 
+        CREATE TABLE IF NOT EXISTS countbytype (
+            Transaction_id text
+            , Property_Type text
+        )
+        """
+
+    table_create_detachedhouse_price = """ 
+        CREATE TABLE IF NOT EXISTS avgpricebyloc (
+            Transaction_id text
+            , Property_Type text
+            , Price int
+            , District text
+            , Town_or_City text
+        )
+        """
+
+    table_create_avgpricebyloc = """ 
+        CREATE TABLE IF NOT EXISTS detachedhouse_price (
+            Transaction_id text
+            , Property_Type text
+            , price int
+        )
+        """
 
     create_table_queries = [
         table_drop_housingprice,
         table_create_housingprice,
+        table_create_countbytype,
+        table_create_detachedhouse_price,
+        table_create_avgpricebyloc
     ]
 
     for query in create_table_queries:
@@ -62,7 +84,6 @@ def _copy_tables():
         SECRET_ACCESS_KEY 'r2EKh8d4HBu89pvssxkYqpVeg+cbHImtf/blBlaj'
         SESSION_TOKEN 'FwoGZXIvYXdzECAaDFM3rp2XL67jIWcFTiLOAQnRq9rT9HWwTuT2iBD7X3oY/33V1yHfbVgac1r0hQlDA/+d5G8E5C5PZrM4tV/1nDk607gLOER02q5kTXldvxB3Bp2QpqY8wGTNzgzL5CZdobKNLWb48Nnz6yh6dGEI1VYdjX9e8fUS/QiwDhlH0JcDD2lYVAbeOsEMvgw+zokKLdwUWTt838ybbE3CGhKtjMj/Zt1WXVs0Xfa9EHfMgf1OwG1jntL1xHd7mQtghrxIiVgYFfmdHykm4VLA1qdc1bwmvBdIWxYklS+pTQCEKObL/JwGMi23KSH6KeLIeY2notXsZMjOJ3jhZQp7/9bEZItOYEDRJDYnYBKGHT8Mpovbi/8='
         CSV
-        DELIMITER ','
         IGNOREHEADER 1
     """
 
@@ -70,6 +91,44 @@ def _copy_tables():
     conn.commit()
 
     conn.close()
+
+def _insert_tables():
+    insert_dwh_countbytype ="""
+        INSERT INTO countbytype 
+        SELECT Transaction_id
+            , Property_Type
+        FROM housingprice
+        """
+
+    insert_dwh_avgpricebyloc ="""
+        INSERT INTO avgpricebyloc 
+        SELECT Transaction_id
+            , Property_Type
+            , Price
+            , District
+            , Town_or_City
+        FROM housingprice
+        """
+
+    insert_dwh_detachedhouse_price ="""
+        INSERT INTO detachedhouse_price 
+        SELECT Transaction_id
+            , Property_Type
+            , Price
+        FROM housingprice
+        WHERE property_type = 'D'
+        """
+
+    insert_table_queries = [
+        insert_dwh_countbytype,
+        insert_dwh_avgpricebyloc,
+        insert_dwh_detachedhouse_price,
+    ]
+
+    for query in insert_table_queries:
+        cur.execute(query)
+        conn.commit()
+
 
 with DAG(
     "etl",
@@ -89,5 +148,10 @@ with DAG(
         python_callable=_copy_tables,
     )
 
+    insert_tables = PythonOperator(
+    task_id="insert_tables",
+    python_callable=_insert_tables,
+    )
+
     # [get_files, create_tables] >> process
-    create_tables >> copy_tables
+    create_tables >> copy_tables >> insert_tables
