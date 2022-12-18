@@ -2,11 +2,14 @@ import psycopg2
 import json
 import glob
 import os
+from datetime import datetime
 from typing import List
 from airflow import DAG
 from airflow.utils import timezone
 from airflow.operators.python import PythonOperator
 from airflow.providers.postgres.hooks.postgres import PostgresHook
+
+curr_date = datetime.today().strftime('%Y-%m-%d')
 
 host = "redshift-cluster-1.ch9yux0jr29i.us-east-1.redshift.amazonaws.com"
 dbname = "dev"
@@ -17,10 +20,9 @@ conn_str = f"host={host} dbname={dbname} user={user} password={password} port={p
 conn = psycopg2.connect(conn_str)
 cur = conn.cursor()
 
-aws_access_key_id = "ASIA255IGVKUMQXAHV5J"
-aws_secret_access_key = "Knxbhfc8myuUxFWehPed/E+PXGE1ZpZcTke66U5E"
-aws_session_token = "FwoGZXIvYXdzEBsaDHia1WQKIZUX4lk7lyLOAUPpsXhutoUSEGrAafrDWnfXSBc59yXyZmCToJHEMCcuyfh5qyneL/4+ZmBQtFD5/KLXd3F6J3dJElqU/4+3aUP0s3tiXGwMmYg3j64KvsxQGVmFx3FqrmqVWIh1n7LC98JTBtTedqoqRuKBkzHPesGc2W78dw1Ikkz01eSZWbGcm6mlbKOW5FXTxU23HRMlop0oJgAWEX2sD3tmUa9FfVs8U/MwmDypocsCf3Vo7R9iWNvIiAt0P7T4B+6668VAj5qvGvRVuuKFhVVYN2YGKPjC+5wGMi3K7pPsghchdIlCqNMaPG3fc+TrnxH5FUlnKbylPbmPMz++Rw/mx+M9qi+CahM="
-
+aws_access_key_id = 'ASIA255IGVKUIS5PWJ5G'
+aws_secret_access_key = 'r2EKh8d4HBu89pvssxkYqpVeg+cbHImtf/blBlaj'
+aws_session_token = 'FwoGZXIvYXdzECAaDFM3rp2XL67jIWcFTiLOAQnRq9rT9HWwTuT2iBD7X3oY/33V1yHfbVgac1r0hQlDA/+d5G8E5C5PZrM4tV/1nDk607gLOER02q5kTXldvxB3Bp2QpqY8wGTNzgzL5CZdobKNLWb48Nnz6yh6dGEI1VYdjX9e8fUS/QiwDhlH0JcDD2lYVAbeOsEMvgw+zokKLdwUWTt838ybbE3CGhKtjMj/Zt1WXVs0Xfa9EHfMgf1OwG1jntL1xHd7mQtghrxIiVgYFfmdHykm4VLA1qdc1bwmvBdIWxYklS+pTQCEKObL/JwGMi23KSH6KeLIeY2notXsZMjOJ3jhZQp7/9bEZItOYEDRJDYnYBKGHT8Mpovbi/8='
 
 def _create_tables():
 
@@ -56,13 +58,17 @@ def _create_tables():
 def _copy_tables():
     copy_table_query = """
         COPY housingprice FROM 's3://tands525/price_paid_records01.csv'
-        ACCESS_KEY_ID 'ASIA255IGVKUMQXAHV5J'
-        SECRET_ACCESS_KEY 'Knxbhfc8myuUxFWehPed/E+PXGE1ZpZcTke66U5E'
-        SESSION_TOKEN 'FwoGZXIvYXdzEBsaDHia1WQKIZUX4lk7lyLOAUPpsXhutoUSEGrAafrDWnfXSBc59yXyZmCToJHEMCcuyfh5qyneL/4+ZmBQtFD5/KLXd3F6J3dJElqU/4+3aUP0s3tiXGwMmYg3j64KvsxQGVmFx3FqrmqVWIh1n7LC98JTBtTedqoqRuKBkzHPesGc2W78dw1Ikkz01eSZWbGcm6mlbKOW5FXTxU23HRMlop0oJgAWEX2sD3tmUa9FfVs8U/MwmDypocsCf3Vo7R9iWNvIiAt0P7T4B+6668VAj5qvGvRVuuKFhVVYN2YGKPjC+5wGMi3K7pPsghchdIlCqNMaPG3fc+TrnxH5FUlnKbylPbmPMz++Rw/mx+M9qi+CahM='
+        ACCESS_KEY_ID 'ASIA255IGVKUIS5PWJ5G'
+        SECRET_ACCESS_KEY 'r2EKh8d4HBu89pvssxkYqpVeg+cbHImtf/blBlaj'
+        SESSION_TOKEN 'FwoGZXIvYXdzECAaDFM3rp2XL67jIWcFTiLOAQnRq9rT9HWwTuT2iBD7X3oY/33V1yHfbVgac1r0hQlDA/+d5G8E5C5PZrM4tV/1nDk607gLOER02q5kTXldvxB3Bp2QpqY8wGTNzgzL5CZdobKNLWb48Nnz6yh6dGEI1VYdjX9e8fUS/QiwDhlH0JcDD2lYVAbeOsEMvgw+zokKLdwUWTt838ybbE3CGhKtjMj/Zt1WXVs0Xfa9EHfMgf1OwG1jntL1xHd7mQtghrxIiVgYFfmdHykm4VLA1qdc1bwmvBdIWxYklS+pTQCEKObL/JwGMi23KSH6KeLIeY2notXsZMjOJ3jhZQp7/9bEZItOYEDRJDYnYBKGHT8Mpovbi/8='
         CSV
+        DELIMITER ','
         IGNOREHEADER 1
-        REGION 'us-east-1'
     """
+
+    for query in copy_table_query:
+        cur.execute(query.format(curr_date, aws_access_key_id, aws_secret_access_key, aws_session_token))        
+        conn.commit()
 
 with DAG(
     "etl",
@@ -77,10 +83,10 @@ with DAG(
         python_callable=_create_tables,
     )
     
-    # process = PythonOperator(
-    #     task_id="process",
-    #     python_callable=_process,
-    # )
+    copy_tables = PythonOperator(
+        task_id="copy_tables",
+        python_callable=_copy_tables,
+    )
 
     # [get_files, create_tables] >> process
     create_tables >> copy_tables
