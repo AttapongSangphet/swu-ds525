@@ -2,7 +2,7 @@
 
 ### This project provide 
 
-### Raw data that I chose for this project is the information about UK's housing price paid from Kaggle website. It is available to download [here](https://www.kaggle.com/datasets/hm-land-registry/uk-housing-prices-paid).
+Raw data that I chose for this project is the information about UK's housing price paid from Kaggle website. It is available to download [here](https://www.kaggle.com/datasets/hm-land-registry/uk-housing-prices-paid).
 
 
 ## Data Modeling
@@ -36,24 +36,25 @@ docker-compose up
 
 ## Create AWS S3 Bucket
 
-### First of all, we need to create the AWS S3 bucket as our "data lake" to collect raw data.
-### In this step, S3 bucket must be eited "block public access" and bucket policy to allow all access from public can connect to the bucket (note: this edition is not recemmended for practical use).
+First of all, we need to create the AWS S3 bucket as our "data lake" to collect raw data.
 
-### To get AWS Credential keys for connecting to S3 bucket, we can use code below on the AWS interface as shown in picture to get "aws_access_key", "aws_secret_access_key", "aws_session_token"
+In this step, S3 bucket must be eited "block public access" and bucket policy to allow all access from public can connect to the bucket (note: this edition is not recemmended for practical use).
+
+To get AWS Credential keys for connecting to S3 bucket, we can use code below on the AWS interface as shown in picture to get "aws_access_key", "aws_secret_access_key", "aws_session_token"
 
 ```sh
 cat ~/.aws/credentials
 ```
 ![AWS credentials](pictures/AWS_S3_Credentials_edited.jpg)
 
-### and we can find AWS S3 URI in the S3 properties interface as shown in pictue below
+And we can find AWS S3 URI in the S3 properties interface as shown in pictue below
 
 ![AWS S3 URI](pictures/AWS_S3_URI_edited.jpg)
 
 
 ## Loading raw data to Datalake, AWS S3 bucket
-### To connect to AWS S3 bucket, AWS Credential keys as mentioned above and S3 URI are required in this step. 
-### Change connection configurations in etl code following by AWS Credential keys and S3 URI.
+To connect to AWS S3 bucket, AWS Credential keys as mentioned above and S3 URI are required in this step. 
+Change connection configurations in etl code following by AWS Credential keys and S3 URI.
 
 ![ETL Code Configuration](pictures/.jpg)
 
@@ -63,37 +64,38 @@ cat ~/.aws/credentials
 python etl_load_data_to_s3.py
 ```
 
-### Now, our data was uploaded to S3 bucket
+Now, our data was uploaded to S3 bucket
 
 ![AWS S3](pictures/AWS_S3.jpg)
 
 
 ## Create AWS Redshift
-### AWS Redshift will be used as data warehouse for tranfroming raw data from data lake, AWS S3, to another tables that we need in AWS Redshift.
+AWS Redshift will be used as data warehouse for tranfroming raw data from data lake, AWS S3, to another tables that we need in AWS Redshift.
 
-### Same as the connection of AWS S3, We must use specific endpoint of Redshift cluster, password, database name, username and port number for connecting to AWS Redshift.
+Same as the connection of AWS S3, We must use specific endpoint of Redshift cluster, password, database name, username and port number for connecting to AWS Redshift.
+
 ![AWS Redshift Endpoint](pictures/AWS_Redshift_edited.jpg)
 
 
 ## ETL PySpark-Notebook with S3
-### Before transforming the data to AWS Redshift, we can run prepared python code that can connect to AWS S3 on PySpark-Notebook to explore, clean and transform our raw data, and also write cleaded data to AWS S3. This step help us to do our tasks more autonomous and clean raw data easier by just running python code.
+Before transforming the data to AWS Redshift, we can run prepared python code that can connect to AWS S3 on PySpark-Notebook to explore, clean and transform our raw data, and also write cleaded data to AWS S3. This step help us to do our tasks more autonomous and clean raw data easier by just running python code.
 
 
 ## Creating and Scheduling Data Pipeline with Airflow
-### Connect to Airflow by following port 8080
-### Prepare etl code and adjust connection configurations to access to data lake (AWS S3) and data warehouse (AWS Redshift) and etl code in dags folder.
+Connect to Airflow by following port 8080
+Prepare etl code and adjust connection configurations to access to data lake (AWS S3) and data warehouse (AWS Redshift) and etl code in dags folder.
 
 ![Connection Configuaration](pictures/.jpg)
 
-### In this project, scheduling data pipeline consists of creating tables in AWS Redshift, loading data from AWS S3 to stagging data in AWS Redshift and then transforming stagging table to provided tables that will be used for Visualization process in the next step.
-### Provided etl code make our pipeline can run autonomously following by dags operation as show in picture below.
+In this project, scheduling data pipeline consists of creating tables in AWS Redshift, loading data from AWS S3 to stagging data in AWS Redshift and then transforming stagging table to provided tables that will be used for Visualization process in the next step.
+Provided etl code make our pipeline can run autonomously following by dags operation as show in picture below.
 
 ![Airflow Graph](pictures/Airflow_Graph.jpg)
 
-### Activate and triggle dag on Airflow interface and now we can see that graph of operator process was created autonomously and all statuses of each process are turned to "success" (green color).
+Activate and triggle dag on Airflow interface and now we can see that graph of operator process was created autonomously and all statuses of each process are turned to "success" (green color).
 
 ![Airflow Scheduling](pictures/Airflow_Trigger.jpg)
 
-### And we can see all tables by was created by scheduling data pipeline on Redshift interface as shown in picture below.
+And we can see all tables by was created by scheduling data pipeline on Redshift interface as shown in picture below.
 
 ![Scheduling Data Tranformation](pictures/Transfrom_Data.jpg)
