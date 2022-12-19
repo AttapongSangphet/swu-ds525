@@ -9,10 +9,10 @@ from airflow.operators.python import PythonOperator
 from airflow.providers.postgres.hooks.postgres import PostgresHook
 
 
-host = "redshift-cluster-1.ch9yux0jr29i.us-east-1.redshift.amazonaws.com"
-dbname = "dev"
-user = "awsuser"
-password = "kD36cC9lA9k7Jii9mokn"
+host = "redshift-endpoint"
+dbname = "dbname"
+user = "user"
+password = "password"
 port = "5439"
 conn_str = f"host={host} dbname={dbname} user={user} password={password} port={port}"
 conn = psycopg2.connect(conn_str)
@@ -82,10 +82,10 @@ def _create_tables():
 
 def _copy_tables():
     copy_table_query = """
-        COPY housingprice FROM 's3://tands525/price_paid_records01.csv'
-        ACCESS_KEY_ID 'ASIA255IGVKUIS5PWJ5G'
-        SECRET_ACCESS_KEY 'r2EKh8d4HBu89pvssxkYqpVeg+cbHImtf/blBlaj'
-        SESSION_TOKEN 'FwoGZXIvYXdzECAaDFM3rp2XL67jIWcFTiLOAQnRq9rT9HWwTuT2iBD7X3oY/33V1yHfbVgac1r0hQlDA/+d5G8E5C5PZrM4tV/1nDk607gLOER02q5kTXldvxB3Bp2QpqY8wGTNzgzL5CZdobKNLWb48Nnz6yh6dGEI1VYdjX9e8fUS/QiwDhlH0JcDD2lYVAbeOsEMvgw+zokKLdwUWTt838ybbE3CGhKtjMj/Zt1WXVs0Xfa9EHfMgf1OwG1jntL1xHd7mQtghrxIiVgYFfmdHykm4VLA1qdc1bwmvBdIWxYklS+pTQCEKObL/JwGMi23KSH6KeLIeY2notXsZMjOJ3jhZQp7/9bEZItOYEDRJDYnYBKGHT8Mpovbi/8='
+        COPY housingprice FROM 's3_URI'
+        ACCESS_KEY_ID 'aws_access_key'
+        SECRET_ACCESS_KEY 'aws_secret_access_key'
+        SESSION_TOKEN 'aws_session_token'
         CSV
         IGNOREHEADER 1
     """
