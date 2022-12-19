@@ -53,7 +53,7 @@ cat ~/.aws/credentials
 
 ## Loading raw data to Datalake, AWS S3 bucket
 ### To connect to AWS S3 bucket, AWS Credential keys as mentioned above and S3 URI are required in this step. 
-### Change connecting configurations in etl code following by AWS Credential keys and S3 URI.
+### Change connection configurations in etl code following by AWS Credential keys and S3 URI.
 
 ![ETL Code Configuration](pictures/.jpg)
 
@@ -79,7 +79,21 @@ python etl_load_data_to_s3.py
 ### Before transforming the data to AWS Redshift, we can run prepared python code that can connect to AWS S3 on PySpark-Notebook to explore, clean and transform our raw data, and also write cleaded data to AWS S3. This step help us to do our tasks more autonomous and clean raw data easier by just running python code.
 
 
-## Creating and Scheduling Data Pipeline
+## Creating and Scheduling Data Pipeline with Airflow
+### Connect to Airflow by following port 8080
+### Prepare etl code and adjust connection configurations to access to data lake (AWS S3) and data warehouse (AWS Redshift) and etl code in dags folder.
 
+![Connection Configuaration](pictures/.jpg)
 
+### In this project, scheduling data pipeline consists of creating tables in AWS Redshift, loading data from AWS S3 to stagging data in AWS Redshift and then transforming stagging table to provided tables that will be used for Visualization process in the next step.
+### Provided etl code make our pipeline can run autonomously following by dags operation as show in picture below.
 
+![Airflow Graph](pictures/Airflow_Graph.jpg)
+
+### Activate and triggle dag on Airflow interface and now we can see that graph of operator process was created autonomously and all statuses of each process are turned to "success" (green color).
+
+![Airflow Scheduling](pictures/Airflow_Trigger.jpg)
+
+### And we can see all tables by was created by scheduling data pipeline on Redshift interface as shown in picture below.
+
+![Scheduling Data Tranformation](pictures/Transfrom_Data.jpg)
