@@ -132,7 +132,9 @@ And we can see all tables by was created by scheduling data pipeline on Redshift
 
 
 ## Data Visualizaion with Tableau
-To create data visualization, we can connect tableau with AWS Redshift Directly by usging AWS Redshift endpoint, username, password, port and database name.
+To create data visualization, We chose Tableau desktop software because it is one of powerful soffware for data visualization and it can connect to various database platform, including AWS Redshift.
+
+we can connect tableau with AWS Redshift directly by usging AWS Redshift endpoint, username, password, port and database name.
 
 ![Tableau Redshift Connection Configuration](pictures/Tableau_Redshift_Connection_Configuration.jpg)
 
