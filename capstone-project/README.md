@@ -1,6 +1,6 @@
 # Capstone Project Construction
 
-This project provide 
+This project provides  
 
 Raw data that I chose for this project is the information about UK's housing price paid from Kaggle website. It is available to download [here](https://www.kaggle.com/datasets/hm-land-registry/uk-housing-prices-paid).
 
