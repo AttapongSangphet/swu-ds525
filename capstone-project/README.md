@@ -25,6 +25,7 @@ This preovided data pipeline start from collecting the data from Kaggle website 
 
 ## Tools & Technologies
 Computer language: Python, SQL, Spark
+
 Tools: AWS S3, AWS Redshift, Airflow, Tableau, Gitpod platform
 
 
