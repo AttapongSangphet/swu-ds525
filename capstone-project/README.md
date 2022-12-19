@@ -1,6 +1,6 @@
 # Capstone Project Construction
 
-### This project provide 
+This project provide 
 
 Raw data that I chose for this project is the information about UK's housing price paid from Kaggle website. It is available to download [here](https://www.kaggle.com/datasets/hm-land-registry/uk-housing-prices-paid).
 
@@ -80,14 +80,18 @@ Same as the connection of AWS S3, We must use specific endpoint of Redshift clus
 ## ETL PySpark-Notebook with S3
 Before transforming the data to AWS Redshift, we can run prepared python code that can connect to AWS S3 on PySpark-Notebook to explore, clean and transform our raw data, and also write cleaded data to AWS S3. This step help us to do our tasks more autonomous and clean raw data easier by just running python code.
 
+Connect to PySpark-Notebook by following port 8888
+
 
 ## Creating and Scheduling Data Pipeline with Airflow
 Connect to Airflow by following port 8080
+
 Prepare etl code and adjust connection configurations to access to data lake (AWS S3) and data warehouse (AWS Redshift) and etl code in dags folder.
 
 ![Connection Configuaration](pictures/.jpg)
 
 In this project, scheduling data pipeline consists of creating tables in AWS Redshift, loading data from AWS S3 to stagging data in AWS Redshift and then transforming stagging table to provided tables that will be used for Visualization process in the next step.
+
 Provided etl code make our pipeline can run autonomously following by dags operation as show in picture below.
 
 ![Airflow Graph](pictures/Airflow_Graph.jpg)
@@ -99,3 +103,17 @@ Activate and triggle dag on Airflow interface and now we can see that graph of o
 And we can see all tables by was created by scheduling data pipeline on Redshift interface as shown in picture below.
 
 ![Scheduling Data Tranformation](pictures/Transfrom_Data.jpg)
+
+
+## Data Visualizaion with Tableau
+To create data visualization, we can connect tableau with AWS Redshift Directly by usging AWS Redshift endpoint, username, password, port and database name.
+
+![Tableau Redshift Connection Configuration](pictures/Tableau_Redshift_Connection_Configuration.jpg)
+
+we can connect Tableau with AWS Redshift already. Now we can use these tables to build our Visualization.
+
+![Tableau Redshift Connection](pictures/Tableau_Redshift_Connection.jpg)
+
+The Dashboard for this project is shown in picture below.
+
+![Dashboard](pictures/Dashboard.jpg)
