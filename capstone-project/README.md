@@ -1,7 +1,7 @@
 # Capstone Project Construction
 
 ## problem
-For anyone who want to purchase properties in UK or Real Estate Companiy which is looking for investing in properties in UK, The housing price paid information is one of the most important thing they should know before spending their money for it, especially the detached house which is has a very high price compared to another property type. Thus, in this project, I am interested to study about information of detached houseing price in UK and create data platform for building dashboard to present actual information about housing price paid or to find insight of them. 
+For anyone who want to purchase properties in UK or Real Estate Company which is looking for investing in properties in UK, The housing price paid information is one of the most important thing they should know before spending their money for it, especially the detached house which is has a very high price compared to another property type. Thus, in this project, I am interested to study about information of detached houseing price in UK and create data platform for building dashboard to present actual information about housing price paid or to find insight of them. 
 
 
 ## Source
