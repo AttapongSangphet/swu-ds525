@@ -1,9 +1,7 @@
 # Capstone Project Construction
 
-For anyone who want to purchase properties in UK or any firms which is looking for investing in properties in UK,  
-
 ## problem
-
+For anyone who want to purchase properties in UK or Real Estate Companiy which is looking for investing in properties in UK, The housing price paid information is one of the most important thing they should know before spending their money for it, especially the detached house which is has a very high price compared to another property type. Thus, in this project, I am interested to study about information of detached houseing price in UK and create data platform for building dashboard to present actual information about housing price paid or to find insight of them. 
 
 
 ## Source
@@ -11,10 +9,22 @@ For anyone who want to purchase properties in UK or any firms which is looking f
 Raw data that I chose for this project is the information of all registered property sales in United Kingdom from Kaggle website. It is available to download [here](https://www.kaggle.com/datasets/hm-land-registry/uk-housing-prices-paid).
 
 
-
 ## Data Modeling
+The designed data modeling is non-relational data base that comprises four tables, stagging table, "conut by type" table, "average price of detached house by district" table and "price of detached house" table. The last three tables are builded by tranforming selected data from stagging table and are collected in columnar type database with partisioning. By building data model like this, new created tables are more comfortable to be used for visualization than using all data in table includes unwanted data. Users can get only useful data that we need to provide to them and they can query data faster. The details of data modeling are shown in picture below.
 
 ![Data Modeling](pictures/data_modeling.jpg)
+
+
+## Data Ingestion
+This preovided data pipeline start from collecting the data from Kaggle website then uploading raw data to AWS S3 by using etl code. After preparing raw data in AWS S3 bucket, the next step are creating tables, loading raw data from AWS S3 bucket to AWS Redshift and transfroming stagging data to new tables in AWS Redshift by using Airflow for scheduling task, in this project is set for weekly schedule. And the last step is connecting AWS Redshift to Tableau Desktop and buildin Dashboard for data visualization. The data pipeline's workflow is slown in picture below
+
+![Data Modeling](pictures/workflow.jpg)
+
+
+## Tools & Technologies
+Computer language: Python, SQL, Spark
+Tools: AWS S3, AWS Redshift, Airflow, Tableau, Gitpod platform
+
 
 ## Getting Start
 
@@ -41,7 +51,7 @@ docker-compose up
 
 ### After running prepared docker-compose file, we can access to PySpark and Airflow by following port 8080 and port 8888 respectively.
 
-## Create AWS S3 Bucket
+## Create Data lake, AWS S3 Bucket
 
 First of all, we need to create the AWS S3 bucket as our "data lake" to collect raw data.
 
@@ -78,7 +88,7 @@ Now, our data was uploaded to S3 bucket
 ![AWS S3](pictures/AWS_S3.jpg)
 
 
-## Create AWS Redshift
+## Create Data Warehouse, AWS Redshift
 AWS Redshift will be used as data warehouse for tranfroming raw data from data lake, AWS S3, to another tables that we need in AWS Redshift.
 
 Same as the connection of AWS S3, We must use specific endpoint of Redshift cluster, password, database name, username and port number for connecting to AWS Redshift.
@@ -101,9 +111,9 @@ Prepare etl code and adjust connection configurations to access to data lake (AW
 
 ![Redshift Connection Configuaration](pictures/etl_redshift_configuration.jpg)
 
-In this project, scheduling data pipeline consists of creating tables in AWS Redshift, loading data from AWS S3 to stagging data in AWS Redshift and then transforming stagging table to provided tables that will be used for Visualization process in the next step.
+Scheduling data pipeline by using Airflow consists of creating tables in AWS Redshift, loading data from AWS S3 to stagging data in AWS Redshift and then transforming stagging table to provided tables that will be used for Visualization process in the next step.
 
-Provided etl code make our pipeline can run autonomously following by dags operation as show in picture below.
+Prepared etl code makes our pipeline run all tasks autonomously following by dags operation sequences that we set as show in picture below.
 
 ![Airflow Graph](pictures/Airflow_Graph.jpg)
 
