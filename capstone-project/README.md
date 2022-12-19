@@ -9,6 +9,31 @@
 
 ![Data Modeling](pictures/data_modeling.jpg)
 
+## Getting Start
+
+### create and activate virtual environment and install tools as provided in requirements file.
+
+```sh
+python -m venv ENV
+source ENV/bin/activate
+pip install -r requirements.txt
+```
+
+### make dags directory in Airflow
+
+```sh
+mkdir -p ./dags ./logs ./plugins
+echo -e "AIRFLOW_UID=$(id -u)" > .env
+```
+
+### Run docker-compose 
+
+```sh
+docker-compose up
+```
+
+### After running prepared docker-compose file, we can access to PySpark and Airflow by following port 8080 and port 8888 respectively.
+
 ## Create AWS S3 Bucket
 
 ### First of all, we need to create the AWS S3 bucket as our "data lake" to collect raw data.
@@ -25,23 +50,12 @@ cat ~/.aws/credentials
 
 ![AWS S3 URI](pictures/AWS_S3_URI_edited.jpg)
 
+
 ## Loading raw data to Datalake, AWS S3 bucket
 ### To connect to AWS S3 bucket, AWS Credential keys as mentioned above and S3 URI are required in this step. 
 ### Change connecting configurations in etl code following by AWS Credential keys and S3 URI.
 
-### Then create and activate virtual environment and install tools as provided in requirements file.
-
-```sh
-python -m venv ENV
-source ENV/bin/activate
-pip install -r requirements.txt
-```
-
-### Run docker-compose 
-### our docker 
-```sh
-docker-compose up
-```
+![ETL Code Configuration](pictures/.jpg)
 
 ### run provided etl code to load raw data to AWS s3 Bucket.
 
@@ -61,6 +75,11 @@ python etl_load_data_to_s3.py
 ![AWS Redshift Endpoint](pictures/AWS_Redshift_edited.jpg)
 
 
-## ETL PySpark with S3
+## ETL PySpark-Notebook with S3
+### Before transforming the data to AWS Redshift, we can run prepared python code that can connect to AWS S3 on PySpark-Notebook to explore, clean and transform our raw data, and also write cleaded data to AWS S3. This step help us to do our tasks more autonomous and clean raw data easier by just running python code.
+
+
+## Creating and Scheduling Data Pipeline
+
 
 
