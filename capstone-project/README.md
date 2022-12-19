@@ -56,7 +56,8 @@ And we can find AWS S3 URI in the S3 properties interface as shown in pictue bel
 To connect to AWS S3 bucket, AWS Credential keys as mentioned above and S3 URI are required in this step. 
 Change connection configurations in etl code following by AWS Credential keys and S3 URI.
 
-![ETL Code Configuration](pictures/.jpg)
+![ETL Code Configuration](pictures/load_s3_configuration.jpg)
+![ETL Code Configuration](pictures/load_s3_bucket_configuration.jpg)
 
 ### run provided etl code to load raw data to AWS s3 Bucket.
 
@@ -88,7 +89,8 @@ Connect to Airflow by following port 8080
 
 Prepare etl code and adjust connection configurations to access to data lake (AWS S3) and data warehouse (AWS Redshift) and etl code in dags folder.
 
-![Connection Configuaration](pictures/.jpg)
+![S3 Connection Configuaration](pictures/etl_s3_configuration.jpg)
+![Redshift Connection Configuaration](pictures/etl_redshift_configuration.jpg)
 
 In this project, scheduling data pipeline consists of creating tables in AWS Redshift, loading data from AWS S3 to stagging data in AWS Redshift and then transforming stagging table to provided tables that will be used for Visualization process in the next step.
 
