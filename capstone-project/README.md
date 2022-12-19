@@ -138,7 +138,7 @@ we can connect tableau with AWS Redshift directly by usging AWS Redshift endpoin
 
 ![Tableau Redshift Connection Configuration](pictures/Tableau_Redshift_Connection_Configuration.jpg)
 
-we can connect Tableau with AWS Redshift already. Now we can use these tables to build our Visualization.
+Tableau already connect to all tables in AWS Redshift. Now we can use these tables to build our Visualization.
 
 ![Tableau Redshift Connection](pictures/Tableau_Redshift_Connection.jpg)
 
