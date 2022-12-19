@@ -1,8 +1,15 @@
 # Capstone Project Construction
 
-This project provides  
+For anyone who want to purchase properties in UK or any firms which is looking for investing in properties in UK,  
 
-Raw data that I chose for this project is the information about UK's housing price paid from Kaggle website. It is available to download [here](https://www.kaggle.com/datasets/hm-land-registry/uk-housing-prices-paid).
+## problem
+
+
+
+## Source
+
+Raw data that I chose for this project is the information of all registered property sales in United Kingdom from Kaggle website. It is available to download [here](https://www.kaggle.com/datasets/hm-land-registry/uk-housing-prices-paid).
+
 
 
 ## Data Modeling
