@@ -8,6 +8,8 @@ For anyone who want to purchase properties in UK or Real Estate Company which is
 
 Raw data that I chose for this project is the information of all registered property sales in United Kingdom from Kaggle website. It is available to download [here](https://www.kaggle.com/datasets/hm-land-registry/uk-housing-prices-paid).
 
+![kaggle](pictures/data_from_kaggle.jpg)
+
 
 ## Data Modeling
 The designed data modeling is non-relational data base that comprises four tables, stagging table, "conut by type" table, "average price of detached house by district" table and "price of detached house" table. The last three tables are builded by tranforming selected data from stagging table and are collected in columnar type database with partisioning. By building data model like this, new created tables are more comfortable to be used for visualization than using all data in table includes unwanted data. Users can get only useful data that we need to provide to them and they can query data faster. The details of data modeling are shown in picture below.
@@ -18,7 +20,7 @@ The designed data modeling is non-relational data base that comprises four table
 ## Data Ingestion
 This preovided data pipeline start from collecting the data from Kaggle website then uploading raw data to AWS S3 by using etl code. After preparing raw data in AWS S3 bucket, the next step are creating tables, loading raw data from AWS S3 bucket to AWS Redshift and transfroming stagging data to new tables in AWS Redshift by using Airflow for scheduling task, in this project is set for weekly schedule. And the last step is connecting AWS Redshift to Tableau Desktop and buildin Dashboard for data visualization. The data pipeline's workflow is slown in picture below
 
-![Data Modeling](pictures/workflow.jpg)
+![Workflow](pictures/workflow.jpg)
 
 
 ## Tools & Technologies
@@ -53,9 +55,9 @@ docker-compose up
 
 ## Create Data lake, AWS S3 Bucket
 
-First of all, we need to create the AWS S3 bucket as our "data lake" to collect raw data.
+First of all, we need to create the AWS S3 bucket as our "data lake" to collect raw data. AWS S3 is great one of cloud storage that can collect data in the large scale as we want and charge the cost per size of data storing. However, AWS S3 cost is still very cheap compared to another platform.
 
-In this step, S3 bucket must be eited "block public access" and bucket policy to allow all access from public can connect to the bucket (note: this edition is not recemmended for practical use).
+In this step, S3 bucket must be edited "block public access" and bucket policy to allow all access from public can connect to the bucket (note: this edition is not recemmended for practical use).
 
 To get AWS Credential keys for connecting to S3 bucket, we can use code below on the AWS interface as shown in picture to get "aws_access_key", "aws_secret_access_key", "aws_session_token"
 
@@ -64,7 +66,7 @@ cat ~/.aws/credentials
 ```
 ![AWS credentials](pictures/AWS_S3_Credentials_edited.jpg)
 
-And we can find AWS S3 URI in the S3 properties interface as shown in pictue below
+And we can find AWS S3 URI in the S3 properties interface as shown in picture below
 
 ![AWS S3 URI](pictures/AWS_S3_URI_edited.jpg)
 
@@ -89,7 +91,7 @@ Now, our data was uploaded to S3 bucket
 
 
 ## Create Data Warehouse, AWS Redshift
-AWS Redshift will be used as data warehouse for tranfroming raw data from data lake, AWS S3, to another tables that we need in AWS Redshift.
+AWS Redshift will be used as data warehouse for tranfroming raw data from data lake, AWS S3, to another tables that we need in AWS Redshift. Because of AWS Redshift is based on PostgreSQL that is friendly for new users. Furthermore, it is a columnar database which is suitable for data transformation and analytics.
 
 Same as the connection of AWS S3, We must use specific endpoint of Redshift cluster, password, database name, username and port number for connecting to AWS Redshift.
 
@@ -103,7 +105,10 @@ Connect to PySpark-Notebook by following port 8888
 
 
 ## Creating and Scheduling Data Pipeline with Airflow
-Connect to Airflow by following port 8080
+
+to improve data pipeline performance, Apache Airflow is one good choise platform for creating Scheduling Data Pipeline. This platform is a medern one and has friendly user interface. Users can use this platform to moniter their pipeline easily. Moreover, we can use Python which is a friendly computer language to build workflow with it. That is why this platform become to the popular one.
+
+We can start with Connecting to Airflow by following port 8080
 
 Prepare etl code and adjust connection configurations to access to data lake (AWS S3) and data warehouse (AWS Redshift) and etl code in dags folder.
 
