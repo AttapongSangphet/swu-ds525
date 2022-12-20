@@ -31,7 +31,7 @@ Computer language: Python, SQL, Spark
 Tools: AWS S3, AWS Redshift, Airflow, Tableau, Gitpod platform
 
 
-## Getting Start
+## Getting Started
 
 ### create and activate virtual environment and install tools as provided in requirements file.
 
