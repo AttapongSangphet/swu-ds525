@@ -62,21 +62,22 @@ First of all, we need to create the AWS S3 bucket as our "data lake" to collect 
 
 In this step, S3 bucket must be edited "block public access" and bucket policy to allow all access from public can connect to the bucket (note: permission for all public access is not recommended for practical use).
 
-To get AWS Credential keys for connecting to S3 bucket, we can use code below on the AWS interface as shown in picture to get "aws_access_key", "aws_secret_access_key", "aws_session_token"
+To get AWS credential keys for connecting to S3 bucket, we can use code below on the AWS interface as shown in picture to get "aws_access_key", "aws_secret_access_key" and "aws_session_token".
 
 ```sh
 cat ~/.aws/credentials
 ```
 ![AWS credentials](pictures/AWS_S3_Credentials_edited.jpg)
 
-And we can find AWS S3 URI in the S3 properties interface as shown in picture below
+And we can find AWS S3 URI in the S3 properties interface as shown in picture below.
 
 ![AWS S3 URI](pictures/AWS_S3_URI_edited.jpg)
 
 
 ## Loading raw data to Datalake, AWS S3 bucket
-To connect to AWS S3 bucket, AWS Credential keys as mentioned above and S3 URI are required in this step. 
-Change connection configurations in etl code following by AWS Credential keys and S3 URI.
+To connect to AWS S3 bucket, AWS credential keys and S3 URI as mentioned above are required in this step.
+
+Change connection configurations in etl code following by AWS credential keys and S3 URI.
 
 ![ETL Code Configuration](pictures/load_s3_configuration.jpg)
 
@@ -88,40 +89,40 @@ Change connection configurations in etl code following by AWS Credential keys an
 python etl_load_data_to_s3.py
 ```
 
-Now, our data was uploaded to S3 bucket
+Now, our data was uploaded to S3 bucket already.
 
 ![AWS S3](pictures/AWS_S3.jpg)
 
 
 ## Create Data Warehouse, AWS Redshift
-AWS Redshift will be used as data warehouse for tranfroming raw data from data lake, AWS S3, to another tables that we need in AWS Redshift. Because of AWS Redshift is based on PostgreSQL that is friendly for new users. Furthermore, it is a columnar database which is suitable for data transformation and analytics.
+AWS Redshift will be used as data warehouse for tranfroming raw data from data lake, AWS S3, to another tables in AWS Redshift as designed in data modeling. Because of AWS Redshift is based on PostgreSQL that is friendly for new users. Furthermore, it is a columnar database which is suitable for data transformation and analytics.
 
-Same as the connection of AWS S3, We must use specific endpoint of Redshift cluster, password, database name, username and port number for connecting to AWS Redshift.
+Same as the connection of AWS S3, We can get specific endpoint of Redshift cluster, password, database name, username and port number AWS Redshift and set all of them in connection configurations to access AWS Redshift.
 
 ![AWS Redshift Endpoint](pictures/AWS_Redshift_edited.jpg)
 
 
 ## ETL PySpark-Notebook with S3
-Before transforming the data to AWS Redshift, we can run prepared python code that can connect to AWS S3 on PySpark-Notebook to explore, clean and transform our raw data, and also write cleaded data to AWS S3. This step help us to do our tasks more autonomous and clean raw data easier by just running python code.
+Before transforming data to AWS Redshift, we can run prepared python code that can connect to AWS S3 on PySpark-Notebook to explore, clean and transform our raw data, and also write cleaded data to AWS S3. This step help us to do our tasks more autonomous and clean raw data easier by just running python code.
 
 Connect to PySpark-Notebook by following port 8888
 
 
 ## Creating and Scheduling Data Pipeline with Airflow
 
-to improve data pipeline performance, Apache Airflow is one good choise platform for creating Scheduling Data Pipeline. This platform is a medern one and has friendly user interface. Users can use this platform to moniter their pipeline easily. Moreover, we can use Python which is a friendly computer language to build workflow with it. That is why this platform become to the popular one.
+To improve data pipeline performance, Apache Airflow is one good choice platform for creating scheduling data pipeline. This platform is a medern one and has friendly user interface. Users can use this platform to monitor their pipeline easily. Moreover, we can use Python which is a friendly computer language to build workflow on Apache Airflow. That is why it becomes a popular platform for now.
 
-We can start with Connecting to Airflow by following port 8080
+We can start with connecting to Airflow by following port 8080
 
-Prepare etl code and adjust connection configurations to access to data lake (AWS S3) and data warehouse (AWS Redshift) and etl code in dags folder.
+Prepare our etl code and adjust connection configurations to access to data lake (AWS S3) and data warehouse (AWS Redshift) and keet it in dags folder.
 
 ![S3 Connection Configuaration](pictures/etl_s3_configuration.jpg)
 
 ![Redshift Connection Configuaration](pictures/etl_redshift_configuration.jpg)
 
-Scheduling data pipeline by using Airflow consists of creating tables in AWS Redshift, loading data from AWS S3 to stagging data in AWS Redshift and then transforming stagging table to provided tables that will be used for Visualization process in the next step.
+For this project,scheduling data pipeline by using Airflow consists of creating tables in AWS Redshift, loading data from AWS S3 to stagging data in AWS Redshift and then transforming data in stagging table to designed tables that will be used for Visualization process in the next step.
 
-Prepared etl code makes our pipeline run all tasks autonomously following by dags operation sequences that we set as show in picture below.
+Using etl code makes our pipeline can run all tasks autonomously following by dags operation sequences as show in picture below.
 
 ![Airflow Graph](pictures/Airflow_Graph.jpg)
 
@@ -129,13 +130,13 @@ Activate and triggle dag on Airflow interface and now we can see that graph of o
 
 ![Airflow Scheduling](pictures/Airflow_Trigger.jpg)
 
-And we can see all tables by was created by scheduling data pipeline on Redshift interface as shown in picture below.
+And we can see all tables that was created by scheduling data pipeline on Redshift interface as shown in picture below.
 
 ![Scheduling Data Tranformation](pictures/Transfrom_Data.jpg)
 
 
 ## Data Visualizaion with Tableau
-To create data visualization, We chose Tableau desktop software because it is one of powerful soffware for data visualization and can connect to various database platform, including AWS Redshift.
+To create data visualization, We chose Tableau desktop software because it is one of powerful software for data visualization and can connect to various database platform, including AWS Redshift.
 
 we can connect tableau with AWS Redshift directly by usging AWS Redshift endpoint, username, password, port and database name.
 
