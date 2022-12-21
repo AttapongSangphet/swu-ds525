@@ -105,8 +105,9 @@ Same as the connection of AWS S3, We can get specific endpoint of Redshift clust
 ## ETL PySpark-Notebook with S3
 Before transforming data to AWS Redshift, we can run prepared python code that can connect to AWS S3 on PySpark-Notebook to explore, clean and transform our raw data, and also write cleaded data to AWS S3. This step help us to do our tasks more autonomous and clean raw data easier by just running python code.
 
-Connect to PySpark-Notebook by following port 8888
+Connect to PySpark-Notebook by following port 8888 and run all etl script in PySpark-Notebook platform.
 
+![PySpark-Notebook](pictures/PySpark_Notebook.jpg)
 
 ## Creating and Scheduling Data Pipeline with Airflow
 
