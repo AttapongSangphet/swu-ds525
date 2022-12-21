@@ -107,7 +107,7 @@ Before transforming data to AWS Redshift, we can run prepared python code that c
 
 Connect to PySpark-Notebook by following port 8888 and run all etl script in PySpark-Notebook platform.
 
-![PySpark-Notebook](pictures/PySpark_Notebook.jpg)
+![PySpark-Notebook](pictures/PySpark_Notebook.JPG)
 
 ## Creating and Scheduling Data Pipeline with Airflow
 
