@@ -28,7 +28,7 @@ The preovided data pipeline starts from collecting the data from Kaggle website 
 ## Tools & Technologies
 Computer language: Python, SQL, Spark
 
-Tools: AWS S3, AWS Redshift, Airflow, Tableau, Gitpod platform
+Tools: AWS S3, AWS Redshift, Apache Airflow, Tableau Desktop, Gitpod platform
 
 
 ## Getting Started
@@ -58,9 +58,9 @@ docker-compose up
 
 ## Create Data lake, AWS S3 Bucket
 
-First of all, we need to create the AWS S3 bucket as our "data lake" to collect raw data. AWS S3 is great one of cloud storage that can collect data in the large scale as we want and charge the cost per size of data storing. However, AWS S3 cost is still very cheap compared to another platform.
+First of all, we need to create the AWS S3 bucket as our "data lake" to collect raw data. AWS S3 is great one of cloud storage that can collect data in the large scale as much as we need and charges the cost based on our usage. However, AWS S3 cost is still very cheap compared to another platform.
 
-In this step, S3 bucket must be edited "block public access" and bucket policy to allow all access from public can connect to the bucket (note: this edition is not recemmended for practical use).
+In this step, S3 bucket must be edited "block public access" and bucket policy to allow all access from public can connect to the bucket (note: permission for all public access is not recommended for practical use).
 
 To get AWS Credential keys for connecting to S3 bucket, we can use code below on the AWS interface as shown in picture to get "aws_access_key", "aws_secret_access_key", "aws_session_token"
 
