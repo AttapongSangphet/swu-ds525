@@ -14,13 +14,13 @@ Raw data that I chose for this project is the information of all registered prop
 
 
 ## Data Modeling
-The designed data modeling is non-relational data base that comprises four tables, stagging table, "conut by type" table, "average price of detached house by district" table and "price of detached house" table. The last three tables are builded by tranforming selected data from stagging table and are collected in columnar type database with partisioning. By building data model like this, new created tables are more comfortable to be used for visualization than using all data in table includes unwanted data. Users can get only useful data that we need to provide to them and they can query data faster. The details of data modeling are shown in picture below.
+The designed data modeling is non-relational data base that comprises four tables, stagging table, "count by type" table, "average price of detached house by district" table and "price of detached house" table. The last three tables are builded by tranforming selected data from stagging table and are collected in columnar type database with partisioning. By building data model like this, new created tables are more comfortable to be used for visualization than using all data in stagging table which may include unwanted data. Users can access and get only useful data that we need to provide for them and they can query data faster. The details of data modeling are shown in picture below.
 
 ![Data Modeling](pictures/data_modeling.jpg)
 
 
 ## Data Ingestion
-This preovided data pipeline starts from collecting the data from Kaggle website then uploading raw data to AWS S3 by using etl code. After preparing raw data in AWS S3 bucket, the next step are creating tables, loading raw data from AWS S3 bucket to AWS Redshift and transfroming stagging data to new tables in AWS Redshift by using Airflow for scheduling task, in this project is set for weekly schedule. And the last step is connecting AWS Redshift to Tableau Desktop and buildin Dashboard for data visualization. The data pipeline's workflow is slown in picture below
+The preovided data pipeline starts from collecting the data from Kaggle website then uploading raw data to AWS S3 using etl code. After preparing raw data in AWS S3 bucket, the next steps are creating tables, loading raw data from AWS S3 bucket to AWS Redshift and transfroming stagging data to new tables in AWS Redshift with using Airflow for creating scheduling tasks, for this project is set for weekly schedule. And the last step is connecting AWS Redshift to Tableau Desktop and building Dashboard for data visualization. The data pipeline's workflow is slown in picture below
 
 ![Workflow](pictures/workflow.jpg)
 
